@@ -13,12 +13,13 @@ mount -t proc none /proc
 mount -t sysfs none /sys
 mount -t devpts none /dev/pts
 passwd root
-echo "live" > /etc/hostname
+echo "hacktrack" > /etc/hostname
 cd /etc/skel
 mkdir Desktop Documents Downloads Music Pictures Public Templates Videos
 cd /
 apt-get update && apt-get install nano
 cd /etc/apt/
+
 nano sources.list
 # Core Debian Jessie "8"
 deb http://ftp.us.debian.org/debian jessie main contrib non-free
@@ -29,9 +30,8 @@ deb-src http://ftp.us.debian.org/debian jessie-updates main contrib non-free
 # Updates Security Debian Jessie "8"
 deb http://security.debian.org/ jessie/updates main contrib non-free
 deb-src http://security.debian.org/ jessie/updates main contrib non-free
-apt-get update && apt-get upgrade
 
-
+apt-get update && apt-get upgrade --y
 
 cd /home/dindin/hacktrack/
 sudo cp chroot/boot/vmlinuz-3.16.0-4-586 image/live/vmlinuz
