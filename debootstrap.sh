@@ -1,5 +1,19 @@
 #!/bin/bash
-# Script Arsip Hacktrack
+#    ____  _   _            _    _ _____               _    
+#   / / / | | | | __ _  ___| | _| |_   _| __ __ _  ___| | __
+#  / / /  | |_| |/ _` |/ __| |/ / | | || '__/ _` |/ __| |/ /
+#  \ \ \  |  _  | (_| | (__|   <| | | || | | (_| | (__|   < 
+#   \_\_\ |_| |_|\__,_|\___|_|\_\ | |_||_|  \__,_|\___|_|\_\
+#   "my dream is a good hacker" |_|                         
+# ------------------------------------------------------------
+###################################################################
+# Default Profile << Hack|Track                        
+# version           : 2017.1
+# Author            : Root HackTrack <root@hacktrack-linux.org>
+# Licenced          : Copyright 2017 GNU GPLv3
+# Website           : http://www.hacktrack-linux.org/
+###################################################################
+# Script Arsip Debootstrap Hacktrack
 # make folder work
 mkdir hacktrack && cd hacktrack
 mkdir -p image/{live,isolinux,.disk}
