@@ -8,7 +8,7 @@
 # ------------------------------------------------------------
 ###################################################################
 # Default Profile << Hack|Track                        
-# version           : 2017.1
+# version           : 2019.3
 # Author            : Root HackTrack <root@hacktrack-linux.org>
 # Licenced          : Copyright 2017 GNU GPLv3
 # Website           : http://www.hacktrack-linux.org/
@@ -17,7 +17,7 @@
 # make folder work
 mkdir hacktrack && cd hacktrack
 mkdir -p image/{live,isolinux,.disk}
-sudo debootstrap --arch=i386 --variant=minbase jessie /home/dindin/hacktrack/chroot http://ftp.us.debian.org/debian
+sudo debootstrap --arch=i386 --variant=minbase kali-rolling $HOME/$(whoami)/hacktrack/chroot http://http.kali.org/kali/
 sudo mount --bind /dev/ chroot/dev/
 sudo cp /etc/resolv.conf chroot/etc/
 sudo chroot chroot
@@ -27,32 +27,31 @@ mount -t proc none /proc
 mount -t sysfs none /sys
 mount -t devpts none /dev/pts
 passwd root
-echo "hacktrack" > /etc/hostname
+echo "track" > /etc/hostname
 cd /etc/skel
 mkdir Desktop Documents Downloads Music Pictures Public Templates Videos
-cd /
-apt-get update && apt-get install nano
 cd /etc/apt/
-
 nano sources.list
-# Core Debian Jessie "8"
-deb http://ftp.us.debian.org/debian jessie main contrib non-free
-deb-src http://ftp.us.debian.org/debian jessie main contrib non-free
-# Updates Debian Jessie "8"
-deb http://ftp.us.debian.org/debian jessie-updates main contrib non-free
-deb-src http://ftp.us.debian.org/debian jessie-updates main contrib non-free
-# Updates Security Debian Jessie "8"
-deb http://security.debian.org/ jessie/updates main contrib non-free
-deb-src http://security.debian.org/ jessie/updates main contrib non-free
+# Core Kali-Rolling
+deb http://http.kali.org/kali/ kali-rolling main contrib non-free
+deb-src http://http.kali.org/kali/ kali-rolling main contrib non-free
 
-apt-get update && apt-get upgrade --y
+apt-get update
+apt-get install --no-install-recommends linux-image-686 live-boot systemd-sysv network-manager net-tools wireless-tools wpagui xserver-xorg-core xserver-xorg xinit nano
+apt-get install --no-install-recommends kali-linux-forensic binwalk pngcheck hexedit 
+apt-get install mate-core mate-desktop-environment-extra mate-desktop-environment-extras
 
-cd /home/dindin/hacktrack/
-sudo cp chroot/boot/vmlinuz-3.16.0-4-586 image/live/vmlinuz
-sudo cp chroot/boot/initrd.img-3.16.0-4-586 image/live/initrd.lz 
+apt-get clean && apt-get autoremove && rm -rf /tmp/* ~/.bash_history
+umount /proc && umount /sys && umount /dev/pts
+exit
+sudo umount chroot/dev
+
+cd $HOME/$(whoami)/hacktrack/
+sudo cp chroot/boot/vmlinuz-* image/live/vmlinuz
+sudo cp chroot/boot/initrd.img-* image/live/initrd.lz 
 sudo cp /usr/lib/syslinux/isolinux.bin image/isolinux/
 
-cd /home/dindin/hacktrack/
+cd $HOME/$(whoami)/hacktrack/
 # STANDAR
 sudo mksquashfs chroot image/live/filesystem.squashfs
 # UNKNOW
@@ -69,7 +68,7 @@ cd image/
 sudo rm MD5SUMS
 find -type f -print0 | sudo xargs -0 md5sum | grep -v isolinux/boot.cat | sudo tee MD5SUMS
 cd ..
-sudo mkisofs -r -V "hacktrack-2017.1-i386" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ../hacktrack-2017.1CORE-i386.iso image
-cd .. && sudo chmod 777 hacktrack-2017.1-i386.iso
-isohybrid hacktrack-2017.1-i386.iso
-md5sum hacktrack-2017.1-i386.iso > hacktrack-2017.1-i386.iso.md5sums
+sudo mkisofs -r -V "hacktrack-2019.3-i386" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ../hacktrack-2017.1CORE-i386.iso image
+cd .. && sudo chmod 777 hacktrack-2019.3-i386.iso
+isohybrid hacktrack-2019.3-i386.iso
+md5sum hacktrack-2019.3-i386.iso > hacktrack-2019.3-i386.iso.md5sums
