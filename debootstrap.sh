@@ -15,7 +15,9 @@
 ###################################################################
 # Script Arsip Debootstrap Hacktrack
 # make folder work
-mkdir hacktrack && cd hacktrack
+cd $HOME/$(whoami)/
+mkdir $HOME/$(whoami)/hacktrack 
+cd $HOME/$(whoami)/hacktrack
 mkdir -p image/{live,isolinux,.disk}
 sudo debootstrap --arch=i386 --variant=minbase kali-rolling $HOME/$(whoami)/hacktrack/chroot http://http.kali.org/kali/
 sudo mount --bind /dev/ chroot/dev/
@@ -34,7 +36,6 @@ cd /etc/apt/
 nano sources.list
 # Core Kali-Rolling
 deb http://http.kali.org/kali/ kali-rolling main contrib non-free
-deb-src http://http.kali.org/kali/ kali-rolling main contrib non-free
 
 apt-get update
 apt-get install --no-install-recommends linux-image-686 live-boot systemd-sysv network-manager net-tools wireless-tools wpagui xserver-xorg-core xserver-xorg xinit nano
